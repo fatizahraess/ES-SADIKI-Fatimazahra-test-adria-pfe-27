@@ -1,4 +1,6 @@
 package net.essadiki.accountservice.domain;
 
-public class AccountStatus {
+public enum AccountStatus {
+    ACTIVE,
+    BLOCKED
 }
