@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
-
+import net.essadiki.transactionservice.client.AccountDTO;
 @RestController
 @RequestMapping("/api/transactions")
 @RequiredArgsConstructor
@@ -19,6 +19,13 @@ public class TransactionRestController {
     @GetMapping
     public List<Transaction> getAllTransactions() {
         return transactionService.getAllTransactions();
+    }
+
+    @GetMapping("/account-info/{accountId}")
+    public AccountDTO getAccountInfo(
+            @PathVariable UUID accountId) {
+
+        return transactionService.getAccountDetails(accountId);
     }
 
     @GetMapping("/{id}")

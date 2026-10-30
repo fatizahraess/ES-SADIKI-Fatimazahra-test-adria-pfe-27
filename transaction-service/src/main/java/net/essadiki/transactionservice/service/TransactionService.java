@@ -9,7 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-
+import net.essadiki.transactionservice.client.AccountDTO;
+import net.essadiki.transactionservice.client.AccountFeignClient;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
@@ -19,7 +20,7 @@ import java.util.UUID;
 public class TransactionService {
 
     private final TransactionRepository repository;
-
+    private final AccountFeignClient accountFeignClient;
     @Value("${bank.transaction.max-amount:1000}")
     private BigDecimal maxAmount;
 
@@ -38,6 +39,10 @@ public class TransactionService {
 
     public List<Transaction> getTransactionsByAccount(UUID accountId) {
         return repository.findByAccountId(accountId);
+    }
+
+    public AccountDTO getAccountDetails(UUID accountId) {
+        return accountFeignClient.getAccount(accountId);
     }
 
     @Transactional
